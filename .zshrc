@@ -10,13 +10,60 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/rahul/.oh-my-zsh"
+export WORKON_HOME=$HOME/.virtualenvs
+. /usr/local/bin/virtualenvwrapper.sh
+
+
+### MFT EnvVars
+export AWS_PROFILE="stage"
+export CONSUL_HTTP_ADDR="http://consul.stage.grofer.io"
+export AWS_PROFILE=stage
+export CONSUL_HTTP_ADDR=http://consul.stage.grofer.io
+export VAULT_HTTP_ADDR=http://vault-stage.grofer.io
+export VAULT_AUTH_GITHUB_TOKEN="62c2d1e47bbc4d2c1460e9ef0c49280abc8d7781"
+export ENV_KUBE_NAMESPACE="mft-stardust"
+### Rust EnvVars
+export PATH="$PATH:$HOME/.cargo/bin"
+### Kube config
+export KUBECONFIG="$HOME/.kube/config"
+## Custom Functions
+prod() {
+  kubectl config use-context prod-sgp
+  export CONSUL_HTTP_ADDR=http://consul.prod.grofer.io
+  export VAULT_HTTP_ADDR=http://vault.prod.grofer.io
+}
+stage() {
+  kubectl config use-context stage-ore
+  export CONSUL_HTTP_ADDR=http://consul.stage.grofer.io
+  export VAULT_HTTP_ADDR=http://vault.stage.grofer.io
+}
+prod_old() {
+  kubectl config use-context prod.k8s.local
+  export CONSUL_HTTP_ADDR=http://consul.prod.grofer.io
+  export VAULT_HTTP_ADDR=http://vault.prod.grofer.io
+}
+
+
+# aliases for kubernete
+alias k="kubectl"
+alias kps="kubectl get pods"
+alias kds="kubectl get deployements"
+alias kss="kubectl get services"
+alias kexec="kubectl exec -i -t"
+alias kcg="kubectl cofig get-contexts"
+alias kcs="kubectl config use-context"
+
+
+
+
+
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -75,8 +122,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(git)
-plugins=(git colorize pip python dotenv brew osx zsh-syntax-highlighting zsh-autosuggestions kubectl )
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -111,19 +157,3 @@ source $ZSH/oh-my-zsh.sh
 
 export NVM_DIR="/Users/rahul/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/rahul/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/rahul/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/rahul/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/rahul/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
