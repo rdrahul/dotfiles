@@ -20,7 +20,7 @@ export CONSUL_HTTP_ADDR="http://consul.stage.grofer.io"
 export AWS_PROFILE=stage
 export CONSUL_HTTP_ADDR=http://consul.stage.grofer.io
 export VAULT_HTTP_ADDR=http://vault-stage.grofer.io
-export VAULT_AUTH_GITHUB_TOKEN="62c2d1e47bbc4d2c1460e9ef0c49280abc8d7781"
+export VAULT_AUTH_GITHUB_TOKEN=""
 export ENV_KUBE_NAMESPACE="mft-stardust"
 ### Rust EnvVars
 export PATH="$PATH:$HOME/.cargo/bin"
